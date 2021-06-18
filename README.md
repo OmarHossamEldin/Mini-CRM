@@ -9,7 +9,7 @@ Basically, project to manage companies and their employees. Mini-CRM.
 - Employees
 
 ## Getting started
-- run the commands in your termainl 
+- run the commands in your terminal 
 1. cp .env.example .env
 1. vim .env 
 1. press i in your keyboard

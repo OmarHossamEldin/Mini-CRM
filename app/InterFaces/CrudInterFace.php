@@ -8,7 +8,7 @@ interface CrudInterface {
 
     public function create(array $data): mixed;
 
-    public function update($model, object $data): mixed;
+    public function update($model, array $data): mixed;
 
     public function delete($model):bool;
 }

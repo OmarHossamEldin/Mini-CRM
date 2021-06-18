@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repositories\CompanyRepository;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
@@ -36,54 +35,59 @@ class CompanyController extends Controller
      * @param  App\Repositories\CompanyRepository $companyRepository
      * @return \Illuminate\Http\Response
      */
-    public function store(CompanyRequest $request, CompanyRepository $companyRepository)
+    public function store(CompanyRequest $companyRequest, CompanyRepository $companyRepository)
     {
-        return !!$companyRepository->create($request->validated()) ? 
+        return !!$companyRepository->create($companyRequest->validated()) ? 
         redirect('companies')->with('success','company has been created') : back()->with('error','error occured while saving company');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Models\Company  $company
+     * @return view
      */
-    public function show($id)
+    public function show(Company $company)
     {
-        //
+        return view('company.show', compact('company'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param   App\Models\Company  $company
+     * @return  view
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        //
+        return view('company.edit', compact('company'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param   App\Http\Requests\CompanyRequest $companyRequest
+     * @param   App\Models\Company  $company
+     * @param   App\Repositories\CompanyRepository $companyRepository
+     * @return  view
      */
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $companyRequest, Company $company, CompanyRepository $companyRepository)
     {
-        //
+        return !!$companyRepository->update($company, $companyRequest->validated()) ? 
+        redirect('companies')->with('success','company has been updated') : back()->with('error','error occured while updating company');
+    
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param   App\Models\Company  $company
+     * @param   App\Repositories\CompanyRepository $companyRepository
+     * @return  \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company, CompanyRepository $companyRepository)
     {
-        //
+        return $companyRepository->delete($company) ? 
+        redirect('companies')->with('success','company has been deleted successfully') : back()->with('error','error occured while destorying company');
     }
 }

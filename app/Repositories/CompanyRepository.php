@@ -37,7 +37,7 @@ class CompanyRepository implements CrudInterface
         }
     }
 
-    public function update($company, object $data): mixed
+    public function update($company, array $data): mixed
     {
         try {
             DB::beginTransaction();

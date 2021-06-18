@@ -17,7 +17,7 @@ class CompanyRequest extends FormRequest
             'name'   => "required|string|unique:companies,name,{$this->company?->id}",
             'email'  => "required|string|unique:companies,email,{$this->company?->id}",
             'logo'   => "required|mimes:jpg,bmp,png|dimensions:min_width=100,min_height=100|unique:companies,logo,{$this->company?->id}",
-            'website'=> "required|unique:companies,website,{$this->company?->id}"
+            'website'=> "required|url|unique:companies,website,{$this->company?->id}"
         ];
     }
 }
