@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    use HasFactory;//, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function employees()
+    {
+        return $this->hasMany('App\Models\Employee');
+    }
 }

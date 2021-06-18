@@ -14,7 +14,10 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'firstName'   => "required|string",
+            'lastName'    => "required|string",
+            'email'       => "required|string|unique:employees,email,{$this->employee?->id}",
+            'company_id'  => "required|exists,App\Models\Company,id"
         ];
     }
 }

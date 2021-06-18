@@ -9,7 +9,7 @@ class EmployeeRepository implements CrudInterface
 {
     public function list(): mixed
     {
-        $employees = Employee::paginate(10);
+        $employees = Employee::with('company')->paginate(10);
         return $employees;
     }
 
@@ -19,14 +19,14 @@ class EmployeeRepository implements CrudInterface
         return $employee;
     }
 
-    public function update($model, object $data): object
+    public function update($employee, array $data): object
     {
-        $employee = $model->update($data);
+        $employee = $employee->update($data);
         return $employee;
     }
 
-    public function delete($model): bool
+    public function delete($employee): bool
     {
-        return $model->delete() ? true : false;
+        return $employee->delete() ? true : false;
     }
 }
