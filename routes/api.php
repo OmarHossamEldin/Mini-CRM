@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(["middleware" => ['cors', 'json.response']],function(){
+    
+    Route::get('companies', 'App\Http\Controllers\Api\CompanyController@index')->name('companies.list');
+
+    Route::get('employees', 'App\Http\Controllers\Api\EmployeeController@index')->name('employees.list');
+
 });

@@ -11,7 +11,5 @@ class CompanyController extends Controller
     {
         $compaines = Company::all();
         return response()->json($compaines, 200);
-    }
-
-    
+    }    
 }
