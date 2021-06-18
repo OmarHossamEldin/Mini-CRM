@@ -21,7 +21,7 @@ class EmployeeRepository implements CrudInterface
 
     public function update($employee, array $data): object
     {
-        $employee = $employee->update($data);
+        $employee->update($data);
         return $employee;
     }
 

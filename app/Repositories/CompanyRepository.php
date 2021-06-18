@@ -16,6 +16,12 @@ class CompanyRepository implements CrudInterface
         return $companies;
     }
 
+    public function listOptions(): mixed
+    {
+        $companies = Company::select('id','name')->get();
+        return $companies;
+    }
+
     public function create(array $data): mixed
     {
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\CompanyRepository;
 use App\Repositories\EmployeeRepository;
 use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
@@ -18,14 +19,16 @@ class EmployeeController extends Controller
         $employees = $employeeRepository->list();
         return view('employee.index', compact('employees'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
+     * @param  App\Repositories\CompanyRepository $companyRepository
      * @return view
      */
-    public function create()
-    {
-       return view('employee.create');
+    public function create(CompanyRepository $companyRepository)
+    { 
+       $companies = $companyRepository->listOptions();
+       return view('employee.create', compact('companies'));
     }
 
     /**
@@ -38,7 +41,7 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $employeeRequest, EmployeeRepository $employeeRepository)
     {
         return !!$employeeRepository->create($employeeRequest->validated()) ? 
-        redirect('companies')->with('success','employee has been created') : back()->with('error','error occured while saving employee');
+        redirect('employees')->with('success','employee has been created') : back()->with('error','error occured while saving employee');
     }
 
     /**
@@ -49,18 +52,22 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view('Employee.show', compact('employee'));
+        $employee->load('company');
+        return view('employee.show', compact('employee'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param   App\Models\Employee  $employee
+     * @param  App\Repositories\CompanyRepository $companyRepository
      * @return  view
      */
-    public function edit(Employee $employee)
+    public function edit(Employee $employee, CompanyRepository $companyRepository)
     {
-        return view('Employee.edit', compact('employee'));
+        $companies = $companyRepository->listOptions();
+        $employee->load('company');
+        return view('employee.edit', compact('employee', 'companies'));
     }
 
     /**
@@ -74,7 +81,7 @@ class EmployeeController extends Controller
     public function update(EmployeeRequest $employeeRequest, Employee $employee, EmployeeRepository $employeeRepository)
     {
         return !!$employeeRepository->update($employee, $employeeRequest->validated()) ? 
-        redirect('companies')->with('success','employee has been updated') : back()->with('error','error occured while updating employee');
+        redirect('employees')->with('success','employee has been updated') : back()->with('error','error occured while updating employee');
     
     }
 
@@ -88,6 +95,6 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee, EmployeeRepository $employeeRepository)
     {
         return $employeeRepository->delete($employee) ? 
-        redirect('companies')->with('success','employee has been deleted successfully') : back()->with('error','error occured while destorying employee');
+        redirect('employees')->with('success','employee has been deleted successfully') : back()->with('error','error occured while destorying employee');
     }
 }
