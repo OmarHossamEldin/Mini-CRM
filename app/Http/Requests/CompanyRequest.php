@@ -7,16 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class CompanyRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -24,7 +14,10 @@ class CompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'   => "required|string|unique:companies,name,{$this->company?->id}",
+            'email'  => "required|string|unique:companies,email,{$this->company?->id}",
+            'logo'   => "required|mimes:jpg,bmp,png|dimensions:min_width=100,min_height=100|unique:companies,logo,{$this->company?->id}",
+            'website'=> "required|unique:companies,website,{$this->company?->id}"
         ];
     }
 }

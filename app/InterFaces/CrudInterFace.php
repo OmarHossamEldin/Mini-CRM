@@ -4,11 +4,11 @@ namespace App\InterFaces;
 
 interface CrudInterface {
     
-    public function list(): array;
+    public function list(): mixed;
 
-    public function create(object $data): object;
+    public function create(array $data): mixed;
 
-    public function update($model, object $data): object;
+    public function update($model, object $data): mixed;
 
     public function delete($model):bool;
 }

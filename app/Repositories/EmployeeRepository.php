@@ -7,13 +7,13 @@ use App\Models\Employee;
 
 class EmployeeRepository implements CrudInterface
 {
-    public function list(): array
+    public function list(): mixed
     {
         $employees = Employee::paginate(10);
         return $employees;
     }
 
-    public function create(object $data): object
+    public function create(array $data): object
     {
         $employee = Employee::create($data);
         return $employee;
