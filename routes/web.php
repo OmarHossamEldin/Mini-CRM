@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => 'auth'], function() {
+    
+    Route::resources([
+        'companies' => 'App\Http\Controllers\CompanyController',
+        'employees' => 'App\Http\Controllers\EmployeeController'
+    ]);
+});
