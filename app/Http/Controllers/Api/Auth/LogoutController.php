@@ -18,7 +18,7 @@ class LogoutController extends Controller
             $user->save();
         }
         return response()->json([
-            'message' => Lang::get('auth.logout'),
+            'message' => 'logout successfully',
             'errors' => []
         ], 200);
     }

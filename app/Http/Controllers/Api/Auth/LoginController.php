@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
 use Lang;
 
@@ -23,7 +22,7 @@ class LoginController extends Controller
         if (Auth::attempt($validatedData)) {
             $user = Auth::user();
             $user->ApiTokenGenerater();
-            $user = $user->only(['name', 'email', 'gender', 'api_token']);
+            $user = $user->only(['name', 'email', 'api_token']);
             return response()->json([
                 'message' => Lang::get('auth.success'),
                 'errors' => [],
